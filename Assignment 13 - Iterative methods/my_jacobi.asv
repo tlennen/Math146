@@ -1,0 +1,22 @@
+function [x,iter,relresid] = my_jacobi(A,b,x0,tol,maxiter)
+    n=size(A,1);
+    x=x0;
+    iter = maxiter;
+    % Returns maxiter if fails
+    for i=1:maxiter
+        total =0;
+        for j=1:n
+            if(j~=i)
+                total=A(i,j)*x(j)+total;
+            end
+        end
+        x(i) = (b(i)-total)/a(i,i);
+        if norm(b-A*x)/norm(b)<=tol
+            iter = i;
+            relresid = norm(b-A*x)/norm(b);
+            return;
+            %end program and return relresid, x, and iterations
+        end
+    end
+    relresid = norm(b-A*x)/norm(b);
+end
